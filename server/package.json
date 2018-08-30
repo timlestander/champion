@@ -1,0 +1,26 @@
+{
+  "name": "champion-server",
+  "version": "1.0.0",
+  "description": "Server for champion game",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node ./index.ts",
+    "start": "nodemon ./dist/index.js",
+    "prod": "npm run build && npm run start"
+  },
+  "keywords": [
+    "server",
+    "champion",
+    "api"
+  ],
+  "author": "Tim Lestander",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.16.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "nodemon": "^1.18.3",
+    "socket.io": "^2.1.1"
+  }
+}

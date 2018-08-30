@@ -1,0 +1,46 @@
+.feed-wrapper {
+  h1 {
+    margin: 20px 0 10px 0;
+    text-align: center;
+  }
+
+  width: 250px;
+  height: 100vh;
+  background: rgb(234, 125, 40);
+  padding: 10px;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.left {
+  flex: 0 0 50px;
+  text-align: center;
+  background: rgb(255, 255, 255);
+}
+
+.left i {
+  font-size: 25px;
+  margin-top: 10px;
+  color: rgb(234, 125, 40);
+}
+
+.right {
+  flex: 1 1 0;
+  background: rgb(251, 240, 224);
+  padding: 10px;
+}
+
+.right p {
+  margin: 0;
+}
+
+p.when {
+  text-align: right;
+  font-style: italic;
+}

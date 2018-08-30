@@ -1,0 +1,95 @@
+@import '../scss/variables';
+
+:host {
+  border-top: 10px solid $primary-orange;
+}
+
+.start-wrapper {
+  width: 350px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  h1 {
+    color: #fff;
+    text-align: center;
+    font-family: 'Roboto';
+    font-size: 45px;
+  }
+
+  .tabs {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    width: 250px;
+
+    .tab {
+      text-align: center;
+      padding: 10px;
+      flex: 0 0 100px;
+      font-weight: bold;
+      color: $secondary-dark;
+      border: 3px solid $secondary-dark;
+
+      &.active {
+        color: $primary-orange;
+        border: 3px solid $primary-orange;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .form {
+    margin-top: 15px;
+    padding: 15px;
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin: 15px 0;
+
+      label {
+        color: $primary-orange;
+        font-size: 16px;
+      }
+
+      input[type='text'] {
+        background: $secondary-dark;
+        padding: 15px;
+        border: none;
+        font-size: 17px;
+        color: #fff;
+
+        &.code {
+          text-transform: uppercase;
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+    button {
+      padding: 15px;
+      background: none;
+      color: $primary-orange;
+      border: 3px solid $primary-orange;
+      width: 100%;
+      font-size: 16px;
+      margin: 0;
+
+      &:hover {
+        cursor: pointer;
+        background: $primary-orange;
+        color: $primary-dark;
+      }
+    }
+  }
+}

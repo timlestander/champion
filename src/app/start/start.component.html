@@ -1,0 +1,25 @@
+<div class="start-wrapper">
+    <h1>CHAMPION</h1>
+    <div class="tabs">
+        <div class="tab" (click)="setView('join')" [class.active]="view === 'join'">JOIN</div>
+        <div class="tab" (click)="setView('create')" [class.active]="view === 'create'">CREATE</div>
+    </div>
+    <div class="form" *ngIf="view === 'join'">
+        <div class="form-group">
+            <label>NAME</label>
+            <input type="text" maxlength="15" [(ngModel)]="name">
+        </div>
+        <div class="form-group">
+            <label>ROOM CODE</label>
+            <input type="text" class="code" maxlength="10" [(ngModel)]="code">
+        </div>
+        <button (click)="joinGame()">JOIN GAME</button>
+    </div>
+    <div class="form" *ngIf="view === 'create'">
+        <div class="form-group">
+            <label>NAME</label>
+            <input type="text" maxlength="15" [(ngModel)]="name">
+        </div>
+        <button (click)="createGame()">CREATE GAME</button>
+    </div>
+</div>
