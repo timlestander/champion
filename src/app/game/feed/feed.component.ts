@@ -20,20 +20,7 @@ export class FeedComponent implements OnInit {
     private store: Store<AppState>
   ) {
     this.activities = this.store.select('activity');
-
-    this.socketService.listen('playerJoined').subscribe(player => {
-      this.store.dispatch(
-        new ActivityActions.AddActivity(this.createJoinActivity(player))
-      );
-    });
   }
 
   ngOnInit() {}
-
-  private createJoinActivity(player: any): ActivityInterface {
-    let text: string = `${player.name} joined the game`;
-    let when: string = moment(Date()).fromNow();
-    let icon: string = 'icon';
-    return { text, when, icon };
-  }
 }

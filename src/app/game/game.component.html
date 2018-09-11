@@ -1,1 +1,19 @@
-<app-feed></app-feed>
+<app-feed *ngIf="view === 'FEED'"></app-feed>
+<app-scoreboard *ngIf="view === 'SCOREBOARD'"></app-scoreboard>
+<app-admin *ngIf="view === 'ADMIN'" [gameInfo]="gameInfo"></app-admin>
+<app-main *ngIf="view === 'GAME'"></app-main>
+
+<div class="nav-tabs">
+    <div class="tab" (click)="setActive('SCOREBOARD')">
+        <i class="fas fa-list-ol"></i>
+    </div>
+    <div class="tab" (click)="setActive('GAME')">
+        <i class="fas fa-gamepad"></i>
+    </div>
+    <div class="tab" (click)="setActive('FEED')">
+        <i class="fas fa-comments"></i>
+    </div>
+    <div class="tab" (click)="setActive('ADMIN')" *ngIf="(gameInfo | async)?.isHost">
+        <i class="fab fa-buysellads"></i>
+    </div>
+</div>

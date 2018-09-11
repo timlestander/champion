@@ -1,14 +1,10 @@
 export interface GameInterface {
-  host: any;
+  host: string;
   gameId: string;
-  activeChallenge?: ActiveChallengeInterface;
   players: PlayerInterface[];
-}
-
-export interface ActiveChallengeInterface {
-  challenge: ChallengeInterface;
-  players: ChallengePlayerInterface[];
-  bets: ChallengeBetInterface[];
+  challenge?: ChallengeInterface;
+  champions?: ChampionInterface[];
+  bets?: BetInterface[];
 }
 
 export interface ChallengeInterface {
@@ -17,16 +13,15 @@ export interface ChallengeInterface {
   winScore: number;
   loseScore: number;
   playerCount: number;
-  responseTime: Date;
 }
 
-export interface ChallengePlayerInterface {
+export interface ChampionInterface {
   socketId: any;
   response: boolean | null;
   name: string;
 }
 
-export interface ChallengeBetInterface {
+export interface BetInterface {
   betAmount: number;
   bet: any;
   socket: any;

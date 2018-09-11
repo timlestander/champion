@@ -9,7 +9,18 @@ import { GameComponent } from './game/game.component';
 import { FeedComponent } from './game/feed/feed.component';
 import { RouterGuardService } from './services/router.guard';
 import { StoreModule } from '@ngrx/store';
-import { activityReducer } from './store/reducers/activity.reducer';
+import {
+  uiReducer,
+  playerReducer,
+  challengeReducer,
+  championReducer,
+  activityReducer
+} from './store/reducers';
+import { gameInfoReducer } from './store/reducers/game-info.reducer';
+import { ScoreboardComponent } from './game/scoreboard/scoreboard.component';
+import { AdminComponent } from './game/admin/admin.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { MainComponent } from './game/main/main.component';
 
 const appRoutes: Routes = [
   {
@@ -28,12 +39,30 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, StartComponent, GameComponent, FeedComponent],
+  declarations: [
+    AppComponent,
+    StartComponent,
+    GameComponent,
+    FeedComponent,
+    ScoreboardComponent,
+    AdminComponent,
+    MainComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
-    StoreModule.forRoot({ activity: activityReducer })
+    StoreModule.forRoot({
+      activity: activityReducer,
+      player: playerReducer,
+      gameInfo: gameInfoReducer,
+      challenge: challengeReducer,
+      ui: uiReducer,
+      champion: championReducer
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 5
+    })
   ],
   providers: [SocketService, RouterGuardService],
   bootstrap: [AppComponent]

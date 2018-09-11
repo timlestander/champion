@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 })
 export class StartComponent implements OnInit {
   public name: string = '';
-  public name2: string = '';
   public code: string = '';
   public view: string = 'join';
 
@@ -23,7 +22,7 @@ export class StartComponent implements OnInit {
   ngOnInit() {}
 
   public createGame(): void {
-    this.socketService.emit('createGame', { name: this.name2 });
+    this.socketService.emit('createGame', { name: this.name });
     this.router.navigateByUrl('/game');
   }
 

@@ -1,0 +1,4 @@
+<div class="game-wrapper">
+  <h3 class="message" *ngIf="(ui | async)?.idle">Please wait until the host starts the next challenge.</h3>
+  <h3 class="message" *ngIf="(ui | async)?.startCountdown">Next challenge in {{ countdownService.seconds }}</h3>
+</div>

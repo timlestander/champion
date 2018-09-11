@@ -1,0 +1,21 @@
+.scoreboard-wrapper {
+  padding: 20px;
+
+  h1 {
+    margin-bottom: 10px;
+    text-align: center;
+    color: white;
+  }
+
+  .player {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 2px solid white;
+    color: white;
+    background: rgb(234, 125, 40);
+    p {
+      font-size: 15px;
+    }
+  }
+}

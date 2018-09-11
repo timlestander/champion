@@ -1,0 +1,10 @@
+<div class="scoreboard-wrapper">
+  <h1>Scoreboard</h1>
+  <div class="player" *ngFor="let player of players | async">
+    <p>
+      <strong>{{ player.name }}</strong>
+    </p>
+    <p>Score: {{ player.score }}</p>
+    <p>Has placed bet? {{ player.placedBet ? "Yes" : "No" }}</p>
+  </div>
+</div>

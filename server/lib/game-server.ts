@@ -6,7 +6,10 @@ import {
   GameInterface,
   PlayerInterface,
   CreateGamePayload,
-  JoinGamePayload
+  JoinGamePayload,
+  NextChallengePayload,
+  ChallengeInterface,
+  ChampionInterface
 } from './interfaces';
 
 export class GameServer {
@@ -63,13 +66,17 @@ export class GameServer {
           ]
         };
         socket.join(gameId);
-        socket.emit('gameCreated', this.games[gameId]);
+        this.io.to(gameId).emit('playerJoined', this.games[gameId].players[0]);
+        socket.emit('joinedGame', {
+          ...this.games[gameId],
+          isHost: true,
+          socketId: socket.id
+        });
       });
 
       socket.on('joinGame', (payload: JoinGamePayload) => {
         const { name, gameId } = payload;
         if (gameId in this.games) {
-          console.log("Let's join");
           socket.join(gameId);
           const player: PlayerInterface = {
             name: name,
@@ -78,9 +85,27 @@ export class GameServer {
           };
           this.games[gameId].players.push(player);
           this.io.to(gameId).emit('playerJoined', player);
-          socket.emit('gameJoined', this.games[gameId]);
+          socket.emit('joinedGame', {
+            ...this.games[gameId],
+            isHost: false,
+            socketId: socket.id
+          });
         } else {
           console.log('NOT THIS TIME BITCH');
+        }
+      });
+
+      socket.on('startChallenge', (payload: NextChallengePayload) => {
+        const { gameId, socketId } = payload;
+        const challenge: ChallengeInterface =
+          allChallenges[Math.floor(Math.random() * allChallenges.length)];
+        const challengers: ChampionInterface[] = this.drawPlayers(
+          this.games[gameId].players
+        );
+        if (socketId === this.games[gameId].host) {
+          this.io
+            .to(gameId)
+            .emit('challengeStarted', { challenge, challengers });
         }
       });
 
@@ -104,4 +129,45 @@ export class GameServer {
 
     return gameId;
   }
+
+  private drawPlayers(players: PlayerInterface[]) {
+    return [
+      {
+        ...players[0],
+        response: null
+      },
+      {
+        ...players[0],
+        response: null
+      },
+      {
+        ...players[0],
+        response: null
+      }
+    ];
+  }
 }
+
+const allChallenges: ChallengeInterface[] = [
+  {
+    title: 'Ölhäv',
+    description: 'Vem kan häva en 33cl öl snabbast?',
+    winScore: 300,
+    loseScore: 100,
+    playerCount: 2
+  },
+  {
+    title: 'Armhävningar',
+    description: 'Vem kan göra flest armhävningar?',
+    winScore: 200,
+    loseScore: 50,
+    playerCount: 2
+  },
+  {
+    title: '',
+    description: 'Vem kan häva en 33cl öl snabbast?',
+    winScore: 300,
+    loseScore: 100,
+    playerCount: 2
+  }
+];

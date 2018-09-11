@@ -6,3 +6,8 @@ export interface JoinGamePayload {
   name: string;
   gameId: string;
 }
+
+export interface NextChallengePayload {
+  gameId: string;
+  socketId: string;
+}
