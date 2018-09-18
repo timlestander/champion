@@ -1,19 +1,26 @@
 <div class="game-wrapper">
   <h3 class="message" *ngIf="ui?.idle">Please wait until the host starts the next challenge.</h3>
   <h3 class="message" *ngIf="ui?.startCountdown">Next challenge in {{ countdownService.seconds }}</h3>
-  <div class="message" *ngIf="ui?.responsePhase">
+  <div *ngIf="ui?.responsePhase">
     <div>Wait for responses: {{ countdownService.seconds }}</div>
-    <div *ngIf="champions">
-      <div class="champion" *ngFor="let champion of champions">
-        {{ champion.name }} - {{ champion.response }}
+    <div *ngIf="champions" class="champions">
+      <div class="champion" *ngFor="let champion of champions; let i=index">
+        <div class="response" *ngIf="champion.response !== null" [class.accepted]="champion.response" [class.declined]="!champion.response">
+          <i class="fas fa-times" *ngIf="!champion.response"></i>
+          <i class="fas fa-check" *ngIf="champion.response"></i>
+        </div>
+        <img src="../../../assets/avatar.png" height="100" width="100">
+        <span>{{ champion.name }}</span>
       </div>
     </div>
-    <hr>
-    <div *ngIf="challenge">
+    <div class="challenge" *ngIf="challenge">
       <h4>{{ challenge.title }}</h4>
-      <span>{{ challenge.description }}</span>
-      <p>Winscore {{ challenge.winScore }}</p>
-      <p>Losescore {{ challenge.loseScore }}</p>
+      <p class="description">{{ challenge.description }}</p>
+      <div class="points">
+        <p>Win: {{ challenge.winScore }}</p>
+        <p>Lose: {{ challenge.loseScore }}</p>
+        <p>WO: {{ challenge.loseScore / 2 }}</p>
+      </div>
     </div>
   </div>
   <div class="prompt" *ngIf="ui?.challenged && challenge">

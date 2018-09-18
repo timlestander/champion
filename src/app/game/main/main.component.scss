@@ -1,9 +1,89 @@
+@import '../../scss/variables';
+
 .game-wrapper {
   padding: 20px;
   color: #fff;
 
   .message {
     color: #fff;
+  }
+
+  .champions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    padding: 20px 0;
+    overflow-x: scroll;
+    border-bottom: 3px dotted $primary-orange;
+
+    .champion {
+      display: flex;
+      flex: 0 0 120px;
+      flex-direction: column;
+      position: relative;
+
+      .response {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        top: 0;
+        left: 10px;
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        display: flex;
+
+        i {
+          align-self: center;
+          font-size: 50px;
+        }
+
+        &.accepted {
+          background: rgba(0, 255, 0, 0.5);
+          color: green;
+        }
+
+        &.declined {
+          color: red;
+          background: rgba(255, 0, 0, 0.5);
+        }
+      }
+
+      img {
+        align-self: center;
+      }
+
+      span {
+        margin-top: 10px;
+        font-size: 14px;
+        text-align: center;
+      }
+    }
+  }
+
+  .challenge {
+    h4 {
+      font-size: 25px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .description {
+      text-align: center;
+      font-style: italic;
+    }
+
+    .points {
+      display: flex;
+      justify-content: space-around;
+      p {
+        font-size: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        background: lightcoral;
+      }
+    }
   }
 
   .prompt {

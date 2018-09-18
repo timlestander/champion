@@ -178,10 +178,26 @@ const allChallenges: ChallengeInterface[] = [
     playerCount: 2
   },
   {
-    title: '',
+    title: 'Snabbspring',
     description: 'Vem kan springa runt huset snabbast?',
     winScore: 500,
     loseScore: 200,
+    playerCount: 2
+  },
+  {
+    title: 'Beer pong',
+    description:
+      'Vilka vinner ett klassiskt game av beeo pong? House rules gäller.',
+    winScore: 1000,
+    loseScore: 500,
+    playerCount: 2
+  },
+  {
+    title: 'Europeiska huvudstäder',
+    description:
+      'Vem kan nämna flest europeiska huvudstäder? Varannan huvudstad nämns med betänketid som ni bestämmer.',
+    winScore: 200,
+    loseScore: 100,
     playerCount: 2
   }
 ];
