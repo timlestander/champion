@@ -12,13 +12,16 @@ import {
   PlayerInterface,
   ActivityInterface,
   GameInfoInterface,
-  ChallengeInterface
+  ChallengeInterface,
+  ChampionInterface,
+  UIInterface
 } from '../interfaces';
 import * as ChallengeActions from '../store/actions/challenge.actions';
 import * as UIActions from '../store/actions/ui.actions';
 import * as moment from 'moment';
 
-const START_COUNTDOWN_TIME: number = 10;
+const START_COUNTDOWN_TIME: number = 3;
+const RESPONSE_COUNTDOWN_TIME: number = 8;
 
 @Component({
   selector: 'app-game',
@@ -26,7 +29,12 @@ const START_COUNTDOWN_TIME: number = 10;
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  public gameInfo: Observable<GameInfoInterface>;
+  public gameInfo$: Observable<GameInfoInterface>;
+  public ui$: Observable<UIInterface>;
+  public champions$: Observable<ChampionInterface[]>;
+  public challenge$: Observable<ChallengeInterface>;
+  public players$: Observable<PlayerInterface[]>;
+
   public view: string = 'GAME';
 
   constructor(
@@ -34,36 +42,43 @@ export class GameComponent implements OnInit {
     private socketService: SocketService,
     private store: Store<AppState>
   ) {
-    this.gameInfo = this.store.select('gameInfo');
-
-    this.socketService
-      .listen('joinedGame')
-      .subscribe((gameInfo: GameInfoInterface) => {
-        this.store.dispatch(new GameInfoActions.LoadGameState(gameInfo));
-      });
+    this.gameInfo$ = this.store.select('gameInfo');
+    this.champions$ = this.store.select('champions');
+    this.ui$ = this.store.select('ui');
+    this.challenge$ = this.store.select('challenge');
+    this.players$ = this.store.select('players');
 
     this.socketService
       .listen('playerJoined')
       .subscribe((player: PlayerInterface) => {
         this.store.dispatch(new PlayerActions.PlayerJoined(player));
+        this.store.dispatch(
+          new ActivityActions.AddActivity(this.createJoinActivity(player))
+        );
       });
 
-    this.socketService.listen('playerJoined').subscribe(player => {
+    this.socketService.listen('challengeStarted').subscribe((data: any) => {
       this.store.dispatch(
-        new ActivityActions.AddActivity(this.createJoinActivity(player))
+        new ChallengeActions.LoadChallengeData(data.challenge)
       );
+      this.store.dispatch(new UIActions.StartCountdown());
+      this.store.dispatch(new ChampionActions.SetChampions(data.champions));
+      this.countdownService.init(START_COUNTDOWN_TIME);
+    });
+
+    this.socketService.listen('responsePhase').subscribe((data: any) => {
+      this.store.dispatch(new UIActions.SetResponsePhase());
+      this.countdownService.init(RESPONSE_COUNTDOWN_TIME);
+    });
+
+    this.socketService.listen('challenged').subscribe(() => {
+      this.store.dispatch(new UIActions.SetChallenged());
     });
 
     this.socketService
-      .listen('challengeStarted')
-      // .subscribe((challenge: ChallengeInterface) => {
-      .subscribe((data: any) => {
-        this.store.dispatch(
-          new ChallengeActions.LoadChallengeData(data.challenge)
-        );
-        this.store.dispatch(new UIActions.StartCountdown());
-        this.store.dispatch(new ChampionActions.SetChampions(data.challengers));
-        this.countdownService.init(START_COUNTDOWN_TIME);
+      .listen('championResponded')
+      .subscribe((champion: ChampionInterface) => {
+        this.store.dispatch(new ChampionActions.SetChampionResponse(champion));
       });
   }
 

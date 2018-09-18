@@ -1,21 +1,44 @@
+@import '../../scss/variables';
+
 .scoreboard-wrapper {
-  padding: 20px;
+  padding: 10px 30px;
 
   h1 {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     text-align: center;
     color: white;
   }
 
-  .player {
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 2px solid white;
-    color: white;
-    background: rgb(234, 125, 40);
-    p {
-      font-size: 15px;
+  .scoreboard-table {
+    .table-header,
+    .table-row {
+      display: flex;
+
+      .col {
+        &.th {
+          font-weight: bold;
+          color: $primary-orange;
+          margin-bottom: 10px;
+        }
+
+        &.tr {
+          padding: 10px 0;
+          font-size: 15px;
+          color: #fff;
+        }
+        &.pos {
+          flex-basis: 25%;
+        }
+
+        &.name {
+          flex-basis: 55%;
+        }
+
+        &.score {
+          flex-basis: 20%;
+          text-align: right;
+        }
+      }
     }
   }
 }

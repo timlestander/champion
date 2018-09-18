@@ -99,14 +99,32 @@ export class GameServer {
         const { gameId, socketId } = payload;
         const challenge: ChallengeInterface =
           allChallenges[Math.floor(Math.random() * allChallenges.length)];
-        const challengers: ChampionInterface[] = this.drawPlayers(
+        const champions: ChampionInterface[] = this.drawPlayers(
           this.games[gameId].players
         );
+        this.games[gameId].champions = champions;
+        console.log(this.games[gameId].champions);
         if (socketId === this.games[gameId].host) {
-          this.io
-            .to(gameId)
-            .emit('challengeStarted', { challenge, challengers });
+          this.io.to(gameId).emit('challengeStarted', { challenge, champions });
+
+          setTimeout(() => {
+            this.io.to(gameId).emit('responsePhase');
+            this.io.to(champions[0].socketId).emit('challenged');
+            this.io.to(champions[1].socketId).emit('challenged');
+          }, 3000);
         }
+      });
+
+      socket.on('sendResponse', (payload: any) => {
+        const { gameId, socketId, response } = payload;
+        console.log(gameId);
+        const idx: number = this.games[gameId].champions.findIndex(
+          (champion: any) => champion.socketId === socketId
+        );
+        this.games[gameId].champions[idx].response = response;
+        this.io
+          .to(gameId)
+          .emit('championResponded', this.games[gameId].champions[idx]);
       });
 
       socket.on('disconnect', () => {
@@ -137,11 +155,7 @@ export class GameServer {
         response: null
       },
       {
-        ...players[0],
-        response: null
-      },
-      {
-        ...players[0],
+        ...players[1],
         response: null
       }
     ];
@@ -165,9 +179,9 @@ const allChallenges: ChallengeInterface[] = [
   },
   {
     title: '',
-    description: 'Vem kan häva en 33cl öl snabbast?',
-    winScore: 300,
-    loseScore: 100,
+    description: 'Vem kan springa runt huset snabbast?',
+    winScore: 500,
+    loseScore: 200,
     playerCount: 2
   }
 ];

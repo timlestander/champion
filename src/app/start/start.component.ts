@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../services/socket.service';
 import { Router } from '@angular/router';
+import { AppState } from '../store/app.state';
+import { Store } from '@ngrx/store';
+import * as GameInfoActions from '../store/actions/game-info.actions';
+import * as PlayerActions from '../store/actions/player.actions';
 
 @Component({
   selector: 'app-start',
@@ -12,9 +16,16 @@ export class StartComponent implements OnInit {
   public code: string = '';
   public view: string = 'join';
 
-  constructor(private socketService: SocketService, private router: Router) {
+  constructor(
+    private socketService: SocketService,
+    private router: Router,
+    private store: Store<AppState>
+  ) {
     this.socketService.listen('joinedGame').subscribe(data => {
-      console.log('You joined a game', data);
+      this.store.dispatch(new GameInfoActions.LoadGameState(data));
+      this.store.dispatch(new PlayerActions.SetPlayers(data.players));
+      console.log('HERE?');
+      console.log(data);
       this.router.navigateByUrl('/game');
     });
   }

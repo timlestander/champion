@@ -11,9 +11,9 @@ import { RouterGuardService } from './services/router.guard';
 import { StoreModule } from '@ngrx/store';
 import {
   uiReducer,
-  playerReducer,
+  playersReducer,
   challengeReducer,
-  championReducer,
+  championsReducer,
   activityReducer
 } from './store/reducers';
 import { gameInfoReducer } from './store/reducers/game-info.reducer';
@@ -54,11 +54,11 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     StoreModule.forRoot({
       activity: activityReducer,
-      player: playerReducer,
+      players: playersReducer,
       gameInfo: gameInfoReducer,
       challenge: challengeReducer,
       ui: uiReducer,
-      champion: championReducer
+      champions: championsReducer
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 5

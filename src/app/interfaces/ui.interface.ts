@@ -4,4 +4,5 @@ export interface UIInterface {
   startCountdown: boolean;
   bettingCountdown: boolean;
   responsePhase: boolean;
+  challenged: boolean;
 }

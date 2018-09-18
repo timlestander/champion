@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { SocketService } from '../../services/socket.service';
@@ -12,13 +12,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./scoreboard.component.scss']
 })
 export class ScoreboardComponent implements OnInit {
-  public players: Observable<PlayerInterface[]>;
+  @Input()
+  public players: PlayerInterface[];
+
   constructor(
     private socketService: SocketService,
     private store: Store<AppState>
-  ) {
-    this.players = this.store.select('player');
-  }
+  ) {}
 
   ngOnInit() {}
 }

@@ -1,10 +1,31 @@
 <div class="scoreboard-wrapper">
   <h1>Scoreboard</h1>
-  <div class="player" *ngFor="let player of players | async">
-    <p>
-      <strong>{{ player.name }}</strong>
-    </p>
-    <p>Score: {{ player.score }}</p>
-    <p>Has placed bet? {{ player.placedBet ? "Yes" : "No" }}</p>
+  <!-- <div class="player" *ngFor="let player of players; let i=index">
+    <div class="position">
+      <span>{{ i+1 }}</span>
+    </div>
+    <div class="info">
+      <h3>{{ player.name }}</h3>
+      <div class="col">
+        <i class="fas fas-dollar-sign"></i>
+        <span class="score">${{ player.score }}</span>
+      </div>
+      <div class="col">
+        <i class="fas fa-hand-holding-usd" [class.betted]="player.placedBet"></i>
+        <span class="stat">200</span>
+      </div>
+    </div>
+  </div> -->
+  <div class="scoreboard-table">
+    <div class="table-header">
+      <div class="col th pos">Pos.</div>
+      <div class="col th name">Name</div>
+      <div class="col th score">Score</div>
+    </div>
+    <div class="table-row" *ngFor="let player of players; let i=index">
+      <div class="col tr pos">{{ i+1 }}</div>
+      <div class="col tr name">{{ player.name }}</div>
+      <div class="col tr score">${{ player.score }}</div>
+    </div>
   </div>
 </div>

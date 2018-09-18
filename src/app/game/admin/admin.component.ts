@@ -11,18 +11,16 @@ import { GameInfoInterface } from '../../interfaces/game-info.interface';
 })
 export class AdminComponent implements OnInit {
   @Input()
-  public gameInfo: Observable<GameInfoInterface>;
+  public gameInfo: GameInfoInterface;
 
   constructor(private socketService: SocketService) {}
 
   ngOnInit() {}
 
   public nextChallenge(): void {
-    this.gameInfo.pipe(take(1)).subscribe((state: GameInfoInterface) => {
-      this.socketService.emit('startChallenge', {
-        gameId: state.gameId,
-        socketId: state.socketId
-      });
+    this.socketService.emit('startChallenge', {
+      gameId: this.gameInfo.gameId,
+      socketId: this.gameInfo.socketId
     });
   }
 }

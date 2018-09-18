@@ -1,7 +1,8 @@
 <app-feed *ngIf="view === 'FEED'"></app-feed>
-<app-scoreboard *ngIf="view === 'SCOREBOARD'"></app-scoreboard>
-<app-admin *ngIf="view === 'ADMIN'" [gameInfo]="gameInfo"></app-admin>
-<app-main *ngIf="view === 'GAME'"></app-main>
+<app-scoreboard *ngIf="view === 'SCOREBOARD'" [players]="players$ | async"></app-scoreboard>
+<app-admin *ngIf="view === 'ADMIN'" [gameInfo]="gameInfo$ | async"></app-admin>
+<app-main *ngIf="view === 'GAME'" [ui]="ui$ | async" [challenge]="challenge$ | async" [champions]="champions$ | async" [gameInfo]="gameInfo$ | async">
+</app-main>
 
 <div class="nav-tabs">
     <div class="tab" (click)="setActive('SCOREBOARD')">
@@ -13,7 +14,7 @@
     <div class="tab" (click)="setActive('FEED')">
         <i class="fas fa-comments"></i>
     </div>
-    <div class="tab" (click)="setActive('ADMIN')" *ngIf="(gameInfo | async)?.isHost">
+    <div class="tab" (click)="setActive('ADMIN')" *ngIf="(gameInfo$ | async)?.isHost">
         <i class="fab fa-buysellads"></i>
     </div>
 </div>
