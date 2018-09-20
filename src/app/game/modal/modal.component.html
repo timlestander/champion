@@ -1,0 +1,16 @@
+<div class="inner-wrapper">
+  <div class="challenged">
+    <div *ngIf="ui?.challenged && challenge">
+      <p class="intro">Du har blivit utmanad i..</p>
+      <h2>{{ challenge.title }}</h2>
+      <p>{{ challenge.description }}</p>
+      <div class="points">
+        <p>Win: ${{ challenge.winScore }}</p>
+        <p>Lose: ${{ challenge.loseScore }}</p>
+        <p>WO: ${{ challenge.loseScore / 2 }}</p>
+      </div>
+      <button class="accept" (click)="respond(true)">ACCEPTERA</button>
+      <button class="decline" (click)="respond(false)">NEKA</button>
+    </div>
+  </div>
+</div>

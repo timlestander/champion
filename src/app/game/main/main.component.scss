@@ -1,12 +1,8 @@
 @import '../../scss/variables';
 
 .game-wrapper {
-  padding: 20px;
+  padding: 50px 20px;
   color: #fff;
-
-  .message {
-    color: #fff;
-  }
 
   .champions {
     display: flex;
@@ -81,24 +77,8 @@
         font-size: 15px;
         padding: 10px;
         border-radius: 8px;
-        background: lightcoral;
-      }
-    }
-  }
-
-  .prompt {
-    button {
-      width: 100%;
-      padding: 20px;
-      margin: 10px 0;
-      font-size: 16px;
-
-      &.accept {
-        background: green;
-      }
-
-      &.decline {
-        background: red;
+        background: $primary-orange;
+        color: #fff;
       }
     }
   }

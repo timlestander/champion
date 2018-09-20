@@ -8,6 +8,7 @@ const initialState: UIInterface = {
   startCountdown: false,
   bettingCountdown: false,
   responsePhase: false,
+  responseCountdown: false,
   challenged: false
 };
 
@@ -19,7 +20,12 @@ export function uiReducer(
     case UIActions.START_COUNTDOWN:
       return { ...initialState, idle: false, startCountdown: true };
     case UIActions.SET_RESPONSE_PHASE:
-      return { ...initialState, idle: false, responsePhase: true };
+      return {
+        ...initialState,
+        idle: false,
+        responsePhase: true,
+        responseCountdown: true
+      };
     case UIActions.SET_CHALLENGED:
       return { ...state, challenged: true };
     case UIActions.RESPONDED:

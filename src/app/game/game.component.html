@@ -1,3 +1,9 @@
+<div class="message-board">
+    <h3 class="message" *ngIf="(ui$ | async)?.idle">Please wait until the host starts the next challenge.</h3>
+    <h3 class="message" *ngIf="(ui$ | async)?.startCountdown">Next challenge starts in: {{ countdownService.seconds }}s</h3>
+    <h3 class="message" *ngIf="(ui$ | async)?.responseCountdown">Waiting for responses: {{ countdownService.seconds }}s</h3>
+</div>
+
 <app-feed *ngIf="view === 'FEED'"></app-feed>
 <app-scoreboard *ngIf="view === 'SCOREBOARD'" [players]="players$ | async"></app-scoreboard>
 <app-admin *ngIf="view === 'ADMIN'" [gameInfo]="gameInfo$ | async"></app-admin>
@@ -18,3 +24,6 @@
         <i class="fab fa-buysellads"></i>
     </div>
 </div>
+
+<app-modal *ngIf="showModal" [champions]="champions$ | async" [challenge]="challenge$ | async" [ui]="ui$ | async" [gameInfo]="gameInfo$ | async">
+</app-modal>

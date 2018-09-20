@@ -35,14 +35,5 @@ export class MainComponent {
     private store: Store<AppState>
   ) {}
 
-  public respond(value: boolean): void {
-    this.socketService.emit('sendResponse', {
-      response: value,
-      gameId: this.gameInfo.gameId,
-      socketId: this.gameInfo.socketId
-    });
-    this.store.dispatch(new UIActions.Responded());
-  }
-
   ngOnInit() {}
 }

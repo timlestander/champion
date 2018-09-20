@@ -21,6 +21,7 @@ import { ScoreboardComponent } from './game/scoreboard/scoreboard.component';
 import { AdminComponent } from './game/admin/admin.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MainComponent } from './game/main/main.component';
+import { ModalComponent } from './game/modal/modal.component';
 
 const appRoutes: Routes = [
   {
@@ -46,7 +47,8 @@ const appRoutes: Routes = [
     FeedComponent,
     ScoreboardComponent,
     AdminComponent,
-    MainComponent
+    MainComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

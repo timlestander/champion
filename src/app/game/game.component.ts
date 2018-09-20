@@ -19,7 +19,7 @@ import {
 import * as ChallengeActions from '../store/actions/challenge.actions';
 import * as UIActions from '../store/actions/ui.actions';
 import * as moment from 'moment';
-
+import { ModalService } from '../services/modal.service';
 const START_COUNTDOWN_TIME: number = 3;
 const RESPONSE_COUNTDOWN_TIME: number = 8;
 
@@ -36,17 +36,23 @@ export class GameComponent implements OnInit {
   public players$: Observable<PlayerInterface[]>;
 
   public view: string = 'GAME';
+  public showModal: boolean = false;
 
   constructor(
     private countdownService: CountdownService,
     private socketService: SocketService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private modalService: ModalService
   ) {
     this.gameInfo$ = this.store.select('gameInfo');
     this.champions$ = this.store.select('champions');
     this.ui$ = this.store.select('ui');
     this.challenge$ = this.store.select('challenge');
     this.players$ = this.store.select('players');
+
+    this.modalService.showModal.subscribe((status: boolean) => {
+      this.showModal = status;
+    });
 
     this.socketService
       .listen('playerJoined')
@@ -73,6 +79,7 @@ export class GameComponent implements OnInit {
 
     this.socketService.listen('challenged').subscribe(() => {
       this.store.dispatch(new UIActions.SetChallenged());
+      this.modalService.open();
     });
 
     this.socketService

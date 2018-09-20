@@ -1,20 +1,19 @@
 @import '../scss/variables';
 
-.game-host {
-  width: 100vw;
-  height: 100vh;
-  .game-content {
-    margin: 0 270px;
-    background: yellow;
-    width: 100%;
-    padding: 25px;
-  }
-}
+.message-board {
+  background: $primary-orange;
+  position: fixed;
+  color: #fff;
+  font-size: 12px;
+  top: 0;
+  left: 0;
+  padding: 15px;
+  width: 100%;
+  text-align: center;
 
-.game-client {
-  width: 100vw;
-  height: 100vh;
-  background: indianred;
+  h3 {
+    margin: 0;
+  }
 }
 
 .nav-tabs {

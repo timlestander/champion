@@ -1,0 +1,67 @@
+// .backdrop {
+//     width: 100vw;
+//     background: rgba(0, 0, 0, 0.75);
+//     height: 100vh;
+// }
+@import '../../scss/variables';
+
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  display: flex;
+
+  .inner-wrapper {
+    align-self: center;
+    width: 275px;
+    min-height: 0;
+    box-shadow: 0 0 5px #fff;
+    height: auto;
+    background: rgb(254, 254, 254);
+    border-radius: 20px;
+    border: 1px solid #ddd;
+
+    .challenged {
+      color: #000;
+      padding: 20px;
+      text-align: center;
+
+      .intro {
+        font-size: 12px;
+        font-style: italic;
+      }
+
+      .points {
+        display: flex;
+        justify-content: space-around;
+
+        p {
+          padding: 5px;
+          color: #000;
+          border-radius: 3px;
+          font-size: 14px;
+          background: lightcoral;
+        }
+      }
+
+      button {
+        width: 100%;
+        padding: 15px;
+        margin: 6px 0;
+        font-size: 16px;
+
+        &.accept {
+          background: green;
+        }
+
+        &.decline {
+          background: red;
+        }
+      }
+    }
+  }
+}

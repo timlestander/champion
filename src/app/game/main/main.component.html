@@ -1,8 +1,5 @@
 <div class="game-wrapper">
-  <h3 class="message" *ngIf="ui?.idle">Please wait until the host starts the next challenge.</h3>
-  <h3 class="message" *ngIf="ui?.startCountdown">Next challenge in {{ countdownService.seconds }}</h3>
   <div *ngIf="ui?.responsePhase">
-    <div>Wait for responses: {{ countdownService.seconds }}</div>
     <div *ngIf="champions" class="champions">
       <div class="champion" *ngFor="let champion of champions; let i=index">
         <div class="response" *ngIf="champion.response !== null" [class.accepted]="champion.response" [class.declined]="!champion.response">
@@ -22,10 +19,5 @@
         <p>WO: {{ challenge.loseScore / 2 }}</p>
       </div>
     </div>
-  </div>
-  <div class="prompt" *ngIf="ui?.challenged && challenge">
-    <h4>Du har blivit utmanad i {{ challenge.title }}</h4>
-    <button class="accept" (click)="respond(true)">ACCEPTERA</button>
-    <button class="decline" (click)="respond(false)">NEKA</button>
   </div>
 </div>
