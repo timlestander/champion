@@ -3,6 +3,7 @@ export interface UIInterface {
   connected: boolean;
   startCountdown: boolean;
   bettingCountdown: boolean;
+  responseCountdown: boolean;
   responsePhase: boolean;
   challenged: boolean;
 }
