@@ -20,8 +20,12 @@ import * as ChallengeActions from '../store/actions/challenge.actions';
 import * as UIActions from '../store/actions/ui.actions';
 import * as moment from 'moment';
 import { ModalService } from '../services/modal.service';
-const START_COUNTDOWN_TIME: number = 3;
-const RESPONSE_COUNTDOWN_TIME: number = 8;
+import {
+  START_COUNTDOWN_TIME,
+  RESPONSE_COUNTDOWN_TIME,
+  BETTING_COUNTDOWN_TIME
+} from '../../../constants';
+import { ActivityHelper } from '../libraries/activity.helper';
 
 @Component({
   selector: 'app-game',
@@ -59,7 +63,9 @@ export class GameComponent implements OnInit {
       .subscribe((player: PlayerInterface) => {
         this.store.dispatch(new PlayerActions.PlayerJoined(player));
         this.store.dispatch(
-          new ActivityActions.AddActivity(this.createJoinActivity(player))
+          new ActivityActions.AddActivity(
+            ActivityHelper.createJoinActivity(player)
+          )
         );
       });
 
@@ -74,6 +80,9 @@ export class GameComponent implements OnInit {
 
     this.socketService.listen('responsePhase').subscribe((data: any) => {
       this.store.dispatch(new UIActions.SetResponsePhase());
+      this.store.dispatch(
+        new ActivityActions.AddActivity(ActivityHelper.newChallengeActivity())
+      );
       this.countdownService.init(RESPONSE_COUNTDOWN_TIME);
     });
 
@@ -82,22 +91,53 @@ export class GameComponent implements OnInit {
       this.modalService.open();
     });
 
+    this.socketService.listen('betPhase').subscribe(() => {
+      this.store.dispatch(new UIActions.SetBetPhase());
+      this.countdownService.init(BETTING_COUNTDOWN_TIME);
+      this.modalService.open();
+    });
+
+    this.socketService.listen('bettingFinished').subscribe(() => {
+      this.store.dispatch(new UIActions.BettingFinished());
+      this.modalService.close();
+    });
+
     this.socketService
       .listen('championResponded')
       .subscribe((champion: ChampionInterface) => {
         this.store.dispatch(new ChampionActions.SetChampionResponse(champion));
+        this.store.dispatch(
+          new ActivityActions.AddActivity(
+            ActivityHelper.createResponseActivity(champion)
+          )
+        );
       });
+
+    this.socketService
+      .listen('updateScores')
+      .subscribe((players: PlayerInterface[]) => {
+        this.store.dispatch(new PlayerActions.UpdateScores(players));
+      });
+
+    this.socketService.listen('betPlaced').subscribe((data: any) => {
+      this.store.dispatch(
+        new ActivityActions.AddActivity(ActivityHelper.createBetActivity(data))
+      );
+    });
+
+    this.socketService.listen('challengeEnded').subscribe((data: any) => {
+      this.store.dispatch(
+        new ActivityActions.AddActivity(
+          ActivityHelper.createWinnerActivity(data.name)
+        )
+      );
+      this.store.dispatch(new UIActions.ChallengeEnded());
+      this.store.dispatch(new ChampionActions.ResetChampions());
+    });
   }
 
   public setActive(view: string): void {
     this.view = view;
-  }
-
-  private createJoinActivity(player: any): ActivityInterface {
-    let text: string = `${player.name} joined the game`;
-    let when: string = moment(new Date()).fromNow();
-    let icon: string = 'fas fa-user-plus';
-    return { text, when, icon };
   }
 
   ngOnInit() {}

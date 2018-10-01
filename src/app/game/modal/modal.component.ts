@@ -30,6 +30,8 @@ export class ModalComponent implements OnInit {
   @Input()
   public gameInfo: GameInfoInterface;
 
+  public betAmount: number = 500;
+
   constructor(
     private socketService: SocketService,
     private store: Store<AppState>,
@@ -43,6 +45,18 @@ export class ModalComponent implements OnInit {
       socketId: this.gameInfo.socketId
     });
     this.store.dispatch(new UIActions.Responded());
+    this.modalService.close();
+  }
+
+  public placeBet(champion: ChampionInterface): void {
+    this.store.dispatch(new UIActions.BetPlaced());
+    this.socketService.emit('placeBet', {
+      gameId: this.gameInfo.gameId,
+      socketId: this.gameInfo.socketId,
+      betId: champion.socketId,
+      name: this.gameInfo.name,
+      amount: this.betAmount
+    });
     this.modalService.close();
   }
 

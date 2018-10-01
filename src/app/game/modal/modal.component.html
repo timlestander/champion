@@ -1,16 +1,29 @@
 <div class="inner-wrapper">
-  <div class="challenged">
-    <div *ngIf="ui?.challenged && challenge">
-      <p class="intro">Du har blivit utmanad i..</p>
-      <h2>{{ challenge.title }}</h2>
-      <p>{{ challenge.description }}</p>
-      <div class="points">
-        <p>Win: ${{ challenge.winScore }}</p>
-        <p>Lose: ${{ challenge.loseScore }}</p>
-        <p>WO: ${{ challenge.loseScore / 2 }}</p>
-      </div>
-      <button class="accept" (click)="respond(true)">ACCEPTERA</button>
-      <button class="decline" (click)="respond(false)">NEKA</button>
+  <div class="challenged" *ngIf="ui?.challenged && challenge">
+    <p class="intro">Du har blivit utmanad i..</p>
+    <h2>{{ challenge.title }}</h2>
+    <p>{{ challenge.description }}</p>
+    <div class="points">
+      <p>Win: ${{ challenge.winScore }}</p>
+      <p>Lose: ${{ challenge.loseScore }}</p>
+      <p>WO: ${{ challenge.loseScore / 2 }}</p>
+    </div>
+    <button class="accept" (click)="respond(true)">ACCEPTERA</button>
+    <button class="decline" (click)="respond(false)">NEKA</button>
+  </div>
+
+  <div class="betting" *ngIf="ui?.betPhase && challenge">
+    <h2>Vem vinner i {{ challenge.title }}?</h2>
+
+    <div class="slider">
+      <div>0</div>
+      <input type="range" min="0" max="1000" [(ngModel)]="betAmount" />
+      <div>500</div>
+    </div>
+    <p>Current bet: {{ betAmount }}</p>
+
+    <div class="options" *ngFor="let champion of champions | accepted" (click)="placeBet(champion)">
+      {{ champion.name }}
     </div>
   </div>
 </div>

@@ -24,8 +24,6 @@ export class StartComponent implements OnInit {
     this.socketService.listen('joinedGame').subscribe(data => {
       this.store.dispatch(new GameInfoActions.LoadGameState(data));
       this.store.dispatch(new PlayerActions.SetPlayers(data.players));
-      console.log('HERE?');
-      console.log(data);
       this.router.navigateByUrl('/game');
     });
   }
@@ -34,7 +32,6 @@ export class StartComponent implements OnInit {
 
   public createGame(): void {
     this.socketService.emit('createGame', { name: this.name });
-    this.router.navigateByUrl('/game');
   }
 
   public joinGame(): void {

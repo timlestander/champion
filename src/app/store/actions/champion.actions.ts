@@ -4,6 +4,7 @@ import { ChampionInterface } from '../../interfaces';
 
 export const SET_CHAMPIONS = '[CHAMPION] Set champions';
 export const SET_CHAMPION_RESPONSE = '[CHAMPION] Set champion response';
+export const RESET_CHAMPIONS = '[CHAMPION] Reset champions';
 
 export class SetChampions implements Action {
   readonly type = SET_CHAMPIONS;
@@ -16,4 +17,10 @@ export class SetChampionResponse implements Action {
 
   constructor(public payload: ChampionInterface) {}
 }
-export type Actions = SetChampions | SetChampionResponse;
+
+export class ResetChampions implements Action {
+  readonly type = RESET_CHAMPIONS;
+
+  constructor(public payload?: any) {}
+}
+export type Actions = SetChampions | SetChampionResponse | ResetChampions;

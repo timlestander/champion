@@ -2,7 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { SocketService } from '../../services/socket.service';
-import { GameInfoInterface } from '../../interfaces/game-info.interface';
+import {
+  GameInfoInterface,
+  UIInterface,
+  ChampionInterface
+} from '../../interfaces';
+import * as ActivityAction from '../../store/actions/activity.actions';
+import { ActivityHelper } from '../../libraries/activity.helper';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../store/app.state';
 
 @Component({
   selector: 'app-admin',
@@ -13,7 +21,16 @@ export class AdminComponent implements OnInit {
   @Input()
   public gameInfo: GameInfoInterface;
 
-  constructor(private socketService: SocketService) {}
+  @Input()
+  public ui: UIInterface;
+
+  @Input()
+  public champions: ChampionInterface[];
+
+  constructor(
+    private socketService: SocketService,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit() {}
 
@@ -21,6 +38,14 @@ export class AdminComponent implements OnInit {
     this.socketService.emit('startChallenge', {
       gameId: this.gameInfo.gameId,
       socketId: this.gameInfo.socketId
+    });
+  }
+
+  public setWinner(champion: ChampionInterface): void {
+    this.socketService.emit('setWinner', {
+      socketId: champion.socketId,
+      name: champion.name,
+      gameId: this.gameInfo.gameId
     });
   }
 }

@@ -1,12 +1,15 @@
 <div class="message-board">
+    {{ (gameInfo$ | async)?.gameId }}
     <h3 class="message" *ngIf="(ui$ | async)?.idle">Please wait until the host starts the next challenge.</h3>
-    <h3 class="message" *ngIf="(ui$ | async)?.startCountdown">Next challenge starts in: {{ countdownService.seconds }}s</h3>
-    <h3 class="message" *ngIf="(ui$ | async)?.responseCountdown">Waiting for responses: {{ countdownService.seconds }}s</h3>
+    <h3 class="message" *ngIf="(ui$ | async)?.initPhase">Next challenge starts in: {{ countdownService.seconds }}s</h3>
+    <h3 class="message" *ngIf="(ui$ | async)?.responsePhase">Waiting for responses: {{ countdownService.seconds }}s</h3>
+    <h3 class="message" *ngIf="(ui$ | async)?.betPhase">Place your bets: {{ countdownService.seconds }}s</h3>
+    <h3 class="message" *ngIf="(ui$ | async)?.competitionPhase">Let's compete and see who is the champion...</h3>
 </div>
 
 <app-feed *ngIf="view === 'FEED'"></app-feed>
 <app-scoreboard *ngIf="view === 'SCOREBOARD'" [players]="players$ | async"></app-scoreboard>
-<app-admin *ngIf="view === 'ADMIN'" [gameInfo]="gameInfo$ | async"></app-admin>
+<app-admin *ngIf="view === 'ADMIN'" [gameInfo]="gameInfo$ | async" [ui]="ui$ | async" [champions]="champions$ | async"></app-admin>
 <app-main *ngIf="view === 'GAME'" [ui]="ui$ | async" [challenge]="challenge$ | async" [champions]="champions$ | async" [gameInfo]="gameInfo$ | async">
 </app-main>
 

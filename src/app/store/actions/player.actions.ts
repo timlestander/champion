@@ -4,6 +4,7 @@ import { PlayerInterface } from '../../interfaces';
 
 export const PLAYER_JOINED = '[PLAYER] Joined';
 export const SET_PLAYERS = '[PLAYER] Set players';
+export const UPDATE_SCORES = '[PLAYER] Update scores';
 
 export class PlayerJoined implements Action {
   readonly type = PLAYER_JOINED;
@@ -17,4 +18,10 @@ export class SetPlayers implements Action {
   constructor(public payload: PlayerInterface[]) {}
 }
 
-export type Actions = PlayerJoined | SetPlayers;
+export class UpdateScores implements Action {
+  readonly type = UPDATE_SCORES;
+
+  constructor(public payload?: PlayerInterface[]) {}
+}
+
+export type Actions = PlayerJoined | SetPlayers | UpdateScores;

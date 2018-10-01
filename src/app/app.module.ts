@@ -22,6 +22,8 @@ import { AdminComponent } from './game/admin/admin.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MainComponent } from './game/main/main.component';
 import { ModalComponent } from './game/modal/modal.component';
+import { AcceptedPipe } from './pipes/accepted.pipe';
+import { WhenPipe } from './pipes/when.pipe';
 
 const appRoutes: Routes = [
   {
@@ -48,7 +50,9 @@ const appRoutes: Routes = [
     ScoreboardComponent,
     AdminComponent,
     MainComponent,
-    ModalComponent
+    ModalComponent,
+    AcceptedPipe,
+    WhenPipe
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,9 @@
 export interface UIInterface {
   idle: boolean;
-  connected: boolean;
-  startCountdown: boolean;
-  bettingCountdown: boolean;
-  responseCountdown: boolean;
   responsePhase: boolean;
+  initPhase: boolean;
   challenged: boolean;
+  betPhase: boolean;
+  competitionPhase: boolean;
+  challengeOverview: boolean;
 }

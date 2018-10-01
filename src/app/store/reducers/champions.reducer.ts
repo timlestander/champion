@@ -17,6 +17,8 @@ export function championsReducer(
           champion.socketId === action.payload.socketId
       );
       return [...state.slice(0, idx), action.payload, ...state.slice(idx + 1)];
+    case ChampionActions.RESET_CHAMPIONS:
+      return initialState;
     default:
       return state;
   }

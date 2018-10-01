@@ -1,5 +1,5 @@
 <div class="game-wrapper">
-  <div *ngIf="ui?.responsePhase">
+  <div *ngIf="ui?.challengeOverview">
     <div *ngIf="champions" class="champions">
       <div class="champion" *ngFor="let champion of champions; let i=index">
         <div class="response" *ngIf="champion.response !== null" [class.accepted]="champion.response" [class.declined]="!champion.response">

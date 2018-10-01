@@ -13,6 +13,8 @@ export function playersReducer(
       return [...state, action.payload];
     case PlayerActions.SET_PLAYERS:
       return action.payload;
+    case PlayerActions.UPDATE_SCORES:
+      return action.payload;
     default:
       return state;
   }

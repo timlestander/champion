@@ -1,4 +1,8 @@
 <div class="admin-wrapper">
     <h1>Admin</h1>
-    <button (click)="nextChallenge()">Trigger next challenge</button>
+    <button (click)="nextChallenge()" *ngIf="ui.idle">Trigger next challenge</button>
+    <div class="winner" *ngIf="champions && ui.competitionPhase">
+        <p>Vem vann tävlingen?</p>
+        <button *ngFor="let champion of champions | accepted" (click)="setWinner(champion)">{{ champion.name }}</button>
+    </div>
 </div>

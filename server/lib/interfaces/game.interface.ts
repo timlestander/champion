@@ -16,19 +16,19 @@ export interface ChallengeInterface {
 }
 
 export interface ChampionInterface {
-  socketId: any;
+  socketId: string;
   response: boolean | null;
   name: string;
 }
 
 export interface BetInterface {
-  betAmount: number;
-  bet: any;
-  socket: any;
+  amount: number;
+  betId: string;
+  socketId: string;
 }
 
 export interface PlayerInterface {
   name: string;
-  socketId: any;
+  socketId: string;
   score: number;
 }

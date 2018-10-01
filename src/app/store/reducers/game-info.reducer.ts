@@ -5,8 +5,9 @@ import * as GameInfoActions from '../actions/game-info.actions';
 const initialState: GameInfoInterface = {
   host: '',
   socketId: '',
+  gameId: '',
   isHost: false,
-  gameId: ''
+  name: ''
 };
 
 export function gameInfoReducer(
@@ -20,6 +21,7 @@ export function gameInfoReducer(
         gameId: action.payload.gameId,
         isHost: action.payload.isHost,
         host: action.payload.host,
+        name: action.payload.name,
         socketId: action.payload.socketId
       };
 
